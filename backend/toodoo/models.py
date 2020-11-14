@@ -15,6 +15,8 @@ class Task(models.Model):
     def clean(self):
         if self.complete:
             self.completed_date = datetime.datetime.now()
+        else:
+            self.completed_date = None
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
