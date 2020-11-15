@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'djoser',
     'accounts',
@@ -107,6 +108,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000"
 ]
+
+if DEBUG:
+    SITE_URL = "http://localhost:8000"
+else:
+    SITE_URL = "http://"
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
