@@ -57,6 +57,7 @@ const Register = ({ isAuthenticated }) => {
             name="password"
             value={password}
             onChange={(e) => onChange(e)}
+            minLength='8'
             required
           />
         </div>
@@ -68,6 +69,7 @@ const Register = ({ isAuthenticated }) => {
             name="re_password"
             value={re_password}
             onChange={(e) => onChange(e)}
+            minLength='8'
             required
           />
         </div>
