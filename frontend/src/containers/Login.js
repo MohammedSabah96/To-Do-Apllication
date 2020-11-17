@@ -17,11 +17,11 @@ const Login = ({ isAuthenticated, login }) => {
     e.preventDefault();
     login(email, password);
   };
-  // Is the user authenticated?
-  // Redirect them to home page.
+
   if (isAuthenticated) {
-    Redirect("/");
+    return <Redirect to="/" />;
   }
+
   return (
     <div className="container mt-5">
       <h1>Sign In</h1>
@@ -61,10 +61,9 @@ const Login = ({ isAuthenticated, login }) => {
       </p>
     </div>
   );
-
-  // const mapStateToProps = (state) => ({
-  //   isAuthenticated: state.isAuthenticated,
-  // });
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default connect(null, { login })(Login);
+export default connect(mapStateToProps, { login })(Login);

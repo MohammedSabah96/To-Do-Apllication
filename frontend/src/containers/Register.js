@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const Register = () => {
+const Register = ({ isAuthenticated }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -17,6 +17,11 @@ const Register = () => {
     e.preventDefault();
     // Register
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="container  mt-5">
       <h1>Register</h1>
@@ -75,9 +80,9 @@ const Register = () => {
       </p>
     </div>
   );
-  const mapStateToProps = (state) => ({
-    // State
-  });
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default connect(null, {})(Register);
+export default connect(mapStateToProps, {})(Register);
