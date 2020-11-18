@@ -8,11 +8,13 @@ import Login from "./containers/Login";
 import Register from "./containers/Register";
 import ResetPassword from "./containers/ResetPassword";
 import ResetPasswordConfirm from "./containers/ResetPasswordConfirm";
+import NotFound from "./components/NotFound";
 
 import { Provider } from "react-redux";
 import store from "./store";
 
-require('dotenv').config()
+import "./sass/main.scss";
+require("dotenv").config();
 
 const App = () => (
   <Provider store={store}>
@@ -29,6 +31,7 @@ const App = () => (
             path="/password/reset/confirm/:uid/:token"
             component={ResetPasswordConfirm}
           />
+          <Route component={NotFound} />
         </Switch>
       </Layout>
     </Router>
