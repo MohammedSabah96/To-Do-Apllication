@@ -3,6 +3,8 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  ACTIVATION_SUCCESS,
+  ACTIVATION_FAIL,
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
   AUTHENTICATED_SUCCESS,
@@ -66,11 +68,16 @@ export default function (state = initialState, action) {
         user: null,
       };
     case REGISTER_SUCCESS:
-      return;
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
     case PASSWORD_RESET_SUCCESS:
     case PASSWORD_RESET_FAIL:
     case PASSWORD_RESET_CONFIRM_SUCCESS:
     case PASSWORD_RESET_CONFIRM_FAIL:
+    case ACTIVATION_SUCCESS:
+    case ACTIVATION_FAIL:
     default:
       return state;
   }

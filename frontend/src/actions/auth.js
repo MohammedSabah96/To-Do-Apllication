@@ -4,6 +4,8 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  ACTIVATION_SUCCESS,
+  ACTIVATION_FAIL,
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
   AUTHENTICATED_SUCCESS,
@@ -107,6 +109,49 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
+  }
+};
+
+export const register = (username, email, password, re_password) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ username, email, password, re_password });
+  try {
+    const res = await axios.post(
+      `${REACT_APP_API_URL}/auth/users/`,
+      body,
+      config
+    );
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: REGISTER_FAIL });
+  }
+};
+
+export const verify_activation = (uid, token) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ uid, token });
+  try {
+    await axios.post(
+      `${REACT_APP_API_URL}/auth/users/activation/`,
+      body,
+      config
+    );
+    dispatch({ type: ACTIVATION_SUCCESS });
+  } catch (err) {
+    dispatch({ type: ACTIVATION_FAIL });
   }
 };
 

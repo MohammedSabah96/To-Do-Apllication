@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { register } from "../actions/auth";
 
-const Register = ({ isAuthenticated }) => {
+const Register = ({ isAuthenticated, register }) => {
+  const [accountCreated, setAccountCreated] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,17 +17,23 @@ const Register = ({ isAuthenticated }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // Register
+    if (password === re_password) {
+      register(username, email, password, re_password);
+      setAccountCreated(true);
+    }
   };
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
+  if (accountCreated) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div className="container  mt-5">
       <h1>Register</h1>
-      <p>Register with Your Account.</p>
+      <p>Create Your Account</p>
       <form onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
@@ -57,7 +65,7 @@ const Register = ({ isAuthenticated }) => {
             name="password"
             value={password}
             onChange={(e) => onChange(e)}
-            minLength='8'
+            minLength="8"
             required
           />
         </div>
@@ -65,11 +73,11 @@ const Register = ({ isAuthenticated }) => {
           <input
             className="form-control"
             placeholder="Confirm Password"
-            type="re_password"
+            type="password"
             name="re_password"
             value={re_password}
             onChange={(e) => onChange(e)}
-            minLength='8'
+            minLength="8"
             required
           />
         </div>
@@ -78,7 +86,7 @@ const Register = ({ isAuthenticated }) => {
         </button>
       </form>
       <p className="mt-3">
-        You have an Account? <Link to="/login">Login</Link>
+        Already have an Account? <Link to="/login">Login</Link>
       </p>
     </div>
   );
@@ -87,4 +95,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {})(Register);
+export default connect(mapStateToProps, { register })(Register);
