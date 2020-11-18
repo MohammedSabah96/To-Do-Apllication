@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
+import { set_alert } from "../actions/alert";
 
-const Register = ({ isAuthenticated, register }) => {
+const Register = ({ isAuthenticated, register, set_alert }) => {
   const [accountCreated, setAccountCreated] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -20,6 +21,8 @@ const Register = ({ isAuthenticated, register }) => {
     if (password === re_password) {
       register(username, email, password, re_password);
       setAccountCreated(true);
+    } else {
+      set_alert("Please make sure you enter the same password.", "error");
     }
   };
 
@@ -95,4 +98,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register, set_alert })(Register);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { set_alert } from "./alert";
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -104,11 +105,11 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
 
+    dispatch(set_alert("Authenticated Successfully", "success"));
     dispatch(load_user());
   } catch (err) {
-    dispatch({
-      type: LOGIN_FAIL,
-    });
+    dispatch({ type: LOGIN_FAIL });
+    dispatch(set_alert(err.response.data.detail, "error"));
   }
 };
 
@@ -131,8 +132,17 @@ export const register = (username, email, password, re_password) => async (
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
+    dispatch(set_alert("Register Successfully", "success"));
   } catch (err) {
+    email = err.response.data.email;
+    password = err.response.data.password;
     dispatch({ type: REGISTER_FAIL });
+    if (email) {
+      dispatch(set_alert(email, "error"));
+    }
+    if (password) {
+      dispatch(set_alert(password, "error"));
+    }
   }
 };
 
@@ -150,8 +160,10 @@ export const verify_activation = (uid, token) => async (dispatch) => {
       config
     );
     dispatch({ type: ACTIVATION_SUCCESS });
+    dispatch(set_alert("Activation Successfully", "success"));
   } catch (err) {
     dispatch({ type: ACTIVATION_FAIL });
+    dispatch(set_alert(err.response.data.detail, "error"));
   }
 };
 
@@ -169,8 +181,10 @@ export const reset_password = (email) => async (dispatch) => {
       config
     );
     dispatch({ type: PASSWORD_RESET_SUCCESS });
+    dispatch(set_alert("Request has been sent Successfully", "success"));
   } catch (err) {
     dispatch({ type: PASSWORD_RESET_FAIL });
+    dispatch(set_alert(err.response.data.detail, "error"));
   }
 };
 
@@ -193,13 +207,14 @@ export const reset_password_confirm = (
       config
     );
     dispatch({ type: PASSWORD_RESET_CONFIRM_SUCCESS });
+    dispatch(set_alert("Password has been change Successfully", "success"));
   } catch (err) {
     dispatch({ type: PASSWORD_RESET_CONFIRM_FAIL });
+    dispatch(set_alert(err.response.data.detail, "error"));
   }
 };
 
 export const logout = () => (dispatch) => {
-  dispatch({
-    type: LOGOUT,
-  });
+  dispatch(set_alert("Logout Successfully", "success"));
+  dispatch({ type: LOGOUT });
 };

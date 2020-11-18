@@ -1,31 +1,62 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/auth";
-
-const Navbar = ({ logout, isAuthenticated }) => {
+import Alert from "./Alert";
+import $ from "jquery";
+const Navbar = ({ logout, isAuthenticated, user }) => {
+  useEffect(() => {
+    var pathname = window.location.pathname;
+    if (pathname === "/login") {
+      $("#login").addClass("active");
+    } else if (pathname === "/register") {
+      $("#signup").addClass("active");
+    } else {
+      $("#home").addClass("active");
+    }
+  }, []);
   const guest_links = () => (
     <Fragment>
-      <li className="nav-item">
-        <Link className="nav-link" to="/login">
-          Login
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/register">
-          Sign Up
-        </Link>
-      </li>
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link id="login" className={`nav-link`} to="/login">
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link id="signup" className="nav-link" to="/register">
+            Sign Up
+          </Link>
+        </li>
+      </ul>
     </Fragment>
   );
   const auth_links = () => (
-    <li className="nav-item">
-      <a className="nav-link" href="#" onClick={logout}>
-        Logout
-      </a>
-    </li>
+    <div className="dropdown ml-auto">
+      <button
+        className="btn btn-primary dropdown-toggle"
+        type="button"
+        id="dropdownMenu2"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {user ? user.username : null}
+      </button>
+      <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button className="dropdown-item" type="button">
+          Setting
+        </button>
+        <button className="dropdown-item" onClick={logout} type="button">
+          Logout
+        </button>
+      </div>
+    </div>
   );
-
+  $("ul li a").on("click", function () {
+    $("li a").removeClass("active");
+    $(this).addClass("active");
+  });
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,21 +76,23 @@ const Navbar = ({ logout, isAuthenticated }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/">
-                Home <span className="sr-only">(current)</span>
+            <li className="nav-item">
+              <Link id="home" className="nav-link" to="/">
+                Home
               </Link>
             </li>
-            {isAuthenticated ? auth_links() : guest_links()}
           </ul>
+          {isAuthenticated ? auth_links() : guest_links()}
         </div>
       </nav>
+      <Alert />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
