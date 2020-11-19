@@ -72,7 +72,7 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
 
   return (
     <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <Link id="todo" className="navbar-brand" to="/">
           ToDo
         </Link>

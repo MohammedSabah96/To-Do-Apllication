@@ -16,10 +16,15 @@ const Register = ({ isAuthenticated, register, set_alert }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const capitalize = (s) => {
+    if (typeof s !== "string") return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (password === re_password) {
-      register(username, email, password, re_password);
+      register(capitalize(username), email, password, re_password);
       setAccountCreated(true);
     } else {
       set_alert("Please make sure you enter the same password.", "error");
@@ -42,7 +47,7 @@ const Register = ({ isAuthenticated, register, set_alert }) => {
           <input
             className="form-control"
             placeholder="UserName"
-            type="username"
+            type="text"
             name="username"
             value={username}
             onChange={(e) => onChange(e)}

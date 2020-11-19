@@ -1,0 +1,11 @@
+header {
+  font-size: 2rem;
+}
+
+header,
+#form-todo {
+  min-height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

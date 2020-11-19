@@ -1,8 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import FormTodo from "../components/FormTodo";
+import TodoList from "../components/TodoList";
 
-const Home = () => (
-  <div className="container">
+const Home = ({ isAuthenticated, user }) => {
+  const guest = () => (
     <div className="jumbotron mt-5">
       <h1 className="display-4">Welcome to ToDo Application!</h1>
       <p className="lead">This ToDo has an authentication system.</p>
@@ -12,7 +15,21 @@ const Home = () => (
         Login
       </Link>
     </div>
-  </div>
-);
+  );
+  const auth = () => (
+    <Fragment>
+      <header>
+        <h1>{user ? user.username : null} Todo List</h1>
+      </header>
+      <FormTodo />
+      <TodoList />
+    </Fragment>
+  );
+  return <div className="container">{isAuthenticated ? auth() : guest()}</div>;
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
 
-export default Home;
+export default connect(mapStateToProps)(Home);
