@@ -8,6 +8,7 @@ import Login from "./containers/Login";
 import Register from "./containers/Register";
 import ResetPassword from "./containers/ResetPassword";
 import ResetPasswordConfirm from "./containers/ResetPasswordConfirm";
+import ProfileSetting from "./containers/ProfileSetting";
 import NotFound from "./components/NotFound";
 
 import { Provider } from "react-redux";
@@ -22,15 +23,15 @@ const App = () => (
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/activate/:uid/:token" component={Activate} />
-          <Route exact path="/reset-password" component={ResetPassword} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/activate/:uid/:token" component={Activate} />
+          <Route path="/reset-password" component={ResetPassword} />
           <Route
-            exact
             path="/password/reset/confirm/:uid/:token"
             component={ResetPasswordConfirm}
           />
+          <Route path="/settings" component={ProfileSetting} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

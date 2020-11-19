@@ -36,23 +36,15 @@ export const check_authenticated = () => async (dispatch) => {
         config
       );
       if (res.data.code !== "token_not_valid") {
-        dispatch({
-          type: AUTHENTICATED_SUCCESS,
-        });
+        dispatch({ type: AUTHENTICATED_SUCCESS });
       } else {
-        dispatch({
-          type: AUTHENTICATED_FAIL,
-        });
+        dispatch({ type: AUTHENTICATED_FAIL });
       }
     } catch (err) {
-      dispatch({
-        type: AUTHENTICATED_FAIL,
-      });
+      dispatch({ type: AUTHENTICATED_FAIL });
     }
   } else {
-    dispatch({
-      type: AUTHENTICATED_FAIL,
-    });
+    dispatch({ type: AUTHENTICATED_FAIL });
   }
 };
 
@@ -76,14 +68,10 @@ export const load_user = () => async (dispatch) => {
         payload: res.data,
       });
     } catch (err) {
-      dispatch({
-        type: USER_LOADED_FAIL,
-      });
+      dispatch({ type: USER_LOADED_FAIL });
     }
   } else {
-    dispatch({
-      type: USER_LOADED_FAIL,
-    });
+    dispatch({ type: USER_LOADED_FAIL });
   }
 };
 

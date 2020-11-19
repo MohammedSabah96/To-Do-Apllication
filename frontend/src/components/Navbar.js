@@ -15,6 +15,7 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
       $("#home").addClass("active");
     }
   }, []);
+
   const guest_links = () => (
     <Fragment>
       <ul className="navbar-nav ml-auto">
@@ -44,23 +45,35 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
         {user ? user.username : null}
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <button className="dropdown-item" type="button">
+        <Link className="dropdown-item" to="/settings" role="button">
           Setting
-        </button>
+        </Link>
         <button className="dropdown-item" onClick={logout} type="button">
           Logout
         </button>
       </div>
     </div>
   );
+
   $("ul li a").on("click", function () {
     $("li a").removeClass("active");
     $(this).addClass("active");
   });
+  $("#todo").on("click", () => {
+    $("li a").removeClass("active");
+    $("#home").addClass("active");
+  });
+  $(".dropdown-item").on("mouseenter", function () {
+    $(this).addClass("active");
+  });
+  $(".dropdown-item").on("mouseleave", function () {
+    $(this).removeClass("active");
+  });
+
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
+        <Link id="todo" className="navbar-brand" to="/">
           ToDo
         </Link>
         <button

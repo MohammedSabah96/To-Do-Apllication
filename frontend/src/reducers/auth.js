@@ -51,10 +51,6 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
       };
     case USER_LOADED_FAIL:
-      return {
-        ...state,
-        user: null,
-      };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
     case LOGOUT:
