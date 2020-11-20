@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { create_todo } from "../actions/todo";
 
-const FormTodo = () => {
+const FormTodo = ({ create_todo }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -13,7 +15,7 @@ const FormTodo = () => {
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   const onSubmit = (e) => {
     e.preventDefault();
-
+    create_todo(title, description, important);
     setFormData({
       title: "",
       description: "",
@@ -64,4 +66,4 @@ const FormTodo = () => {
   );
 };
 
-export default FormTodo;
+export default connect(null, { create_todo })(FormTodo);
