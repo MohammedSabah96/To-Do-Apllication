@@ -121,6 +121,7 @@ export const register = (username, email, password, re_password) => async (
       payload: res.data,
     });
     dispatch(set_alert("Register Successfully", "success"));
+    dispatch(set_alert("Please go to your Email and Activating your Account.", "success"));
   } catch (err) {
     email = err.response.data.email;
     password = err.response.data.password;
