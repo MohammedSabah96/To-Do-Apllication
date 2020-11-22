@@ -18,6 +18,7 @@
   justify-content: space-between;
   align-items: center;
   transition: all 1s ease;
+  user-select: none;
 }
 .filter-todo {
   padding: 1rem;
