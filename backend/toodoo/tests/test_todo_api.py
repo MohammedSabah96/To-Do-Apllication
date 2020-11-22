@@ -7,7 +7,7 @@ from toodoo.models import Task
 from toodoo.serializers import TaskSerializer
 
 User = get_user_model()
-TODOS_URL = f"{settings.SITE_URL}/todos/"
+TODOS_URL = f"{settings.SITE_URL}/home/todos/"
 
 
 def sample_todo(user, **params):
