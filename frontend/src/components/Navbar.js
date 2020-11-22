@@ -94,6 +94,20 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
                 Home
               </Link>
             </li>
+            {isAuthenticated ? (
+              <Fragment>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/create-todo">
+                    Create Todo
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/completed">
+                    Completed Todos
+                  </Link>
+                </li>
+              </Fragment>
+            ) : null}
           </ul>
           {isAuthenticated ? auth_links() : guest_links()}
         </div>

@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import FormTodo from "../components/FormTodo";
 import TodoList from "../components/TodoList";
 
-const Home = ({ isAuthenticated, user }) => {
+const Home = ({ match, isAuthenticated, user }) => {
   const guest = () => (
     <div className="jumbotron mt-5">
       <h1 className="display-4">Welcome to ToDo Application!</h1>
@@ -21,8 +20,7 @@ const Home = ({ isAuthenticated, user }) => {
       <header>
         <h1>{user ? user.username : null} Todo List</h1>
       </header>
-      <FormTodo />
-      <TodoList />
+      <TodoList path={match.path} />
     </Fragment>
   );
   return <div className="container">{isAuthenticated ? auth() : guest()}</div>;

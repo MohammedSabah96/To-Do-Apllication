@@ -9,18 +9,31 @@ import {
   TODO_COMPLETED_FAIL,
 } from "../actions/types";
 
-const initialState = [];
+const initialState = {
+  todos: null,
+  completed_todos: null,
+};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
     case GET_TODO_SUCCESS:
-      return payload;
+      return {
+        ...state,
+        todos: payload.filter((todo) => todo.complete !== true),
+        completed_todos: payload.filter((todo) => todo.complete === true),
+      };
     case DELETE_TODO_SUCCESS:
-      return state.filter((todo) => todo.slug !== payload);
-    case CREATE_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.slug !== payload),
+        completed_todos: state.completed_todos.filter(
+          (todo) => todo.slug !== payload
+        ),
+      };
     case TODO_COMPLETED_SUCCESS:
+    case CREATE_TODO_SUCCESS:
     case TODO_COMPLETED_FAIL:
     case CREATE_TODO_FAIL:
     case GET_TODO_FAIL:

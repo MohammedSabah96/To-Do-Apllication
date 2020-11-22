@@ -9,6 +9,8 @@ import Register from "./containers/Register";
 import ResetPassword from "./containers/ResetPassword";
 import ResetPasswordConfirm from "./containers/ResetPasswordConfirm";
 import ProfileSetting from "./containers/ProfileSetting";
+import CompletedTodos from "./containers/CompletedTodos";
+import CreateTodo from "./containers/CreateTodo";
 import NotFound from "./components/NotFound";
 
 import { Provider } from "react-redux";
@@ -32,6 +34,8 @@ const App = () => (
             component={ResetPasswordConfirm}
           />
           <Route path="/settings" component={ProfileSetting} />
+          <Route path="/completed" component={CompletedTodos} />
+          <Route path="/create-todo" component={CreateTodo} />
           <Route component={NotFound} />
         </Switch>
       </Layout>
