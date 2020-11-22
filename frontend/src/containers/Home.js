@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import TodoList from "../components/TodoList";
 
-const Home = ({ match, isAuthenticated, user }) => {
+const Home = ({ isAuthenticated, user }) => {
   const guest = () => (
     <div className="jumbotron mt-5">
       <h1 className="display-4">Welcome to ToDo Application!</h1>
@@ -20,7 +20,7 @@ const Home = ({ match, isAuthenticated, user }) => {
       <header>
         <h1>{user ? user.username : null} Todo List</h1>
       </header>
-      <TodoList path={match.path} />
+      <TodoList />
     </Fragment>
   );
   return <div className="container">{isAuthenticated ? auth() : guest()}</div>;

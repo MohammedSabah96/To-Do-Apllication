@@ -1,9 +1,9 @@
 import React from "react";
 import TodoList from "../components/TodoList";
 
-const CompletedTodos = ({ match }) => (
+const CompletedTodos = () => (
   <div className="container">
-    <TodoList path={match.path} />
+    <TodoList />
   </div>
 );
 

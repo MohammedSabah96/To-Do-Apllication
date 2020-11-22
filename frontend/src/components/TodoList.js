@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { get_todos } from "../actions/todo";
 import Todo from "./Todo";
 
-const TodoList = ({ path, get_todos, todos, completed_todos }) => {
+const TodoList = ({ get_todos, todos, completed_todos }) => {
   useEffect(() => {
     get_todos();
   }, [get_todos]);
-
+  const location = useLocation();
   const handler_todos = (todos) => {
     return (
       todos !== null &&
@@ -17,7 +17,7 @@ const TodoList = ({ path, get_todos, todos, completed_todos }) => {
     );
   };
   const show_todos = () => {
-    if (path === "/completed") {
+    if (location.pathname === "/completed") {
       if (completed_todos && completed_todos.length > 0) {
         return handler_todos(completed_todos);
       } else {

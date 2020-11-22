@@ -1,31 +1,34 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/auth";
 import Alert from "./Alert";
-import $ from "jquery";
+
 const Navbar = ({ logout, isAuthenticated, user }) => {
-  useEffect(() => {
-    var pathname = window.location.pathname;
-    if (pathname === "/login") {
-      $("#login").addClass("active");
-    } else if (pathname === "/register") {
-      $("#signup").addClass("active");
-    } else {
-      $("#home").addClass("active");
-    }
-  }, []);
+  const location = useLocation();
 
   const guest_links = () => (
     <Fragment>
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link id="login" className={`nav-link`} to="/login">
+          <Link
+            id="login"
+            className={`nav-link ${
+              location.pathname === "/login" ? "active" : ""
+            }`}
+            to="/login"
+          >
             Login
           </Link>
         </li>
         <li className="nav-item">
-          <Link id="signup" className="nav-link" to="/register">
+          <Link
+            id="signup"
+            className={`nav-link ${
+              location.pathname === "/register" ? "active" : ""
+            }`}
+            to="/register"
+          >
             Sign Up
           </Link>
         </li>
@@ -55,21 +58,6 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
     </div>
   );
 
-  $("ul li a").on("click", function () {
-    $("li a").removeClass("active");
-    $(this).addClass("active");
-  });
-  $("#todo").on("click", () => {
-    $("li a").removeClass("active");
-    $("#home").addClass("active");
-  });
-  $(".dropdown-item").on("mouseenter", function () {
-    $(this).addClass("active");
-  });
-  $(".dropdown-item").on("mouseleave", function () {
-    $(this).removeClass("active");
-  });
-
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -90,19 +78,35 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link id="home" className="nav-link" to="/">
+              <Link
+                id="home"
+                className={`nav-link ${
+                  location.pathname === "/" ? "active" : ""
+                }`}
+                to="/"
+              >
                 Home
               </Link>
             </li>
             {isAuthenticated ? (
               <Fragment>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/create-todo">
+                  <Link
+                    className={`nav-link ${
+                      location.pathname === "/create-todo" ? "active" : ""
+                    }`}
+                    to="/create-todo"
+                  >
                     Create Todo
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/completed">
+                  <Link
+                    className={`nav-link ${
+                      location.pathname === "/completed" ? "active" : ""
+                    }`}
+                    to="/completed"
+                  >
                     Completed Todos
                   </Link>
                 </li>

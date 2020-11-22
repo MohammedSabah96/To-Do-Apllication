@@ -1,21 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import { delete_todo, complete_todo } from "../actions/todo";
-import $ from "jquery";
 
 const Todo = ({ todo, delete_todo, complete_todo }) => {
-  const handler = (slug) => {
-    $(`#${slug}`).toggle();
-  };
   return (
     <div>
       <div className={`todo ${todo.important ? "bg-danger" : ""}`}>
-        <li
-          onClick={() => handler(todo.slug)}
-          className={`todo-item ${todo.complete ? "completed" : ""}`}
-        >
+        <li className={`todo-item ${todo.complete ? "completed" : ""}`}>
           {todo.title}
         </li>
+        {todo.completed_date !== null ? (
+          <div className="text-black-50">
+            {todo.completed_date.slice(0, 10)},{" "}
+            {todo.completed_date.slice(11, 16)}
+          </div>
+        ) : null}
         <button
           onClick={() => complete_todo(todo.slug, !todo.complete)}
           className="complete-btn"
@@ -26,10 +25,7 @@ const Todo = ({ todo, delete_todo, complete_todo }) => {
           <i className="fas fa-trash"></i>
         </button>
       </div>
-      <div
-        id={todo.slug}
-        className={`todo-item ${todo.complete ? "completed" : ""}`}
-      >
+      <div className={`todo-item ${todo.complete ? "completed" : ""}`}>
         {todo.description}
       </div>
     </div>

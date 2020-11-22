@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 import {
   CREATE_TODO_SUCCESS,
   CREATE_TODO_FAIL,
@@ -21,16 +22,24 @@ export default function (state = initialState, action) {
     case GET_TODO_SUCCESS:
       return {
         ...state,
-        todos: payload.filter((todo) => todo.complete !== true),
-        completed_todos: payload.filter((todo) => todo.complete === true),
+        todos: orderBy(payload, ["created_at"], ["desc"]).filter(
+          (todo) => todo.complete !== true
+        ),
+        completed_todos: orderBy(payload, ["completed_date"], ["desc"]).filter(
+          (todo) => todo.complete === true
+        ),
       };
     case DELETE_TODO_SUCCESS:
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo.slug !== payload),
-        completed_todos: state.completed_todos.filter(
+        todos: orderBy(state.todos, ["created_at"], ["desc"]).filter(
           (todo) => todo.slug !== payload
         ),
+        completed_todos: orderBy(
+          state.completed_todos,
+          ["created_at"],
+          ["desc"]
+        ).filter((todo) => todo.slug !== payload),
       };
     case TODO_COMPLETED_SUCCESS:
     case CREATE_TODO_SUCCESS:
