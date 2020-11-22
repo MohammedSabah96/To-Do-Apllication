@@ -13,6 +13,8 @@ import CompletedTodos from "./containers/CompletedTodos";
 import CreateTodo from "./containers/CreateTodo";
 import NotFound from "./components/NotFound";
 
+import PrivateRoute from "./components/PrivateRoute";
+
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -33,9 +35,9 @@ const App = () => (
             path="/password/reset/confirm/:uid/:token"
             component={ResetPasswordConfirm}
           />
-          <Route path="/settings" component={ProfileSetting} />
-          <Route path="/completed" component={CompletedTodos} />
-          <Route path="/create-todo" component={CreateTodo} />
+          <PrivateRoute path="/settings" component={ProfileSetting} />
+          <PrivateRoute path="/completed" component={CompletedTodos} />
+          <PrivateRoute path="/create-todo" component={CreateTodo} />
           <Route component={NotFound} />
         </Switch>
       </Layout>
